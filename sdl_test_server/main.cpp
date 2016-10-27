@@ -23,11 +23,12 @@ ClientSocket client;
 int SDL_main(int argc, char* argv[]) {
 	win.init("test");
 
-	client.initNetwork("115.159.220.253", 9088); 
-	//client.initNetwork("127.0.0.1", 9088);
+	//client.initNetwork("115.159.220.253", 9088); 
+	client.initNetwork("127.0.0.1", 9088);
 
-	char data[MAX_PACKET] = "abcdefghijklmn";
-	client.sendData((uint8_t*)data, strlen(data) + 1);
+	//char data[MAX_PACKET] = "abcdefghijklmn";
+	B_POINT p{ 5,10 };
+	client.sendData((uint8_t*)&p, sizeof(p));
 	
 	//SDL_Event sdlEvent = {};
 	//while (sdlEvent.type != SDL_QUIT) {

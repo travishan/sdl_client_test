@@ -16,9 +16,18 @@ void ClientSocket::closeSocket() {
 	SDLNet_TCP_Close(socket);
 }
 
-void ClientSocket::sendData(uint8_t* data, uint16_t length) {
+void ClientSocket::sendData(uint8_t* data, uint16_t length, uint16_t flag) {
 
-	int num_sent = SDLNet_TCP_Send(socket, data,length);
+	uint8_t tempData[MAX_PACKET];
+
+	int offset = 0;
+	memcpy(tempData + offset, &flag, sizeof(uint16_t));
+	offset += sizeof(uint16_t);
+
+	memcpy(tempData + offset, data, length);
+	offset += length;
+
+	int num_sent = SDLNet_TCP_Send(socket, tempData, offset);
 	if (num_sent < length) {
 		fprintf(stderr, "ER: SDLNet_TCP_Send: %s\n", SDLNet_GetError());
 		closeSocket();

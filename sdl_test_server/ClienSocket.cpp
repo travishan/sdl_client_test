@@ -24,6 +24,9 @@ void ClientSocket::sendData(uint8_t* data, uint16_t length, uint16_t flag) {
 	memcpy(tempData + offset, &flag, sizeof(uint16_t));
 	offset += sizeof(uint16_t);
 
+	memcpy(tempData + offset, &length, sizeof(uint16_t));
+	offset += sizeof(uint16_t);
+
 	memcpy(tempData + offset, data, length);
 	offset += length;
 

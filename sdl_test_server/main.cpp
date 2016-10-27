@@ -28,11 +28,14 @@ int SDL_main(int argc, char* argv[]) {
 
 	//char data[MAX_PACKET] = "abcdefghijklmn";
 	B_POINT p{ 5,10 };
-	uint16_t flag = FLAG_PLAY;
-	client.sendData((uint8_t*)&p, sizeof(p),flag);
-
-
-	client.sendData((uint8_t*)&p, sizeof(p), flag);
+	uint16_t flag;
+	while (true) {
+		flag = FLAG_PLAY;
+		client.sendData((uint8_t*)&p, sizeof(p), flag);
+		flag = FLAG_CONN;
+		client.sendData((uint8_t*)&p, sizeof(p), flag);
+	}
+	
 	//SDL_Event sdlEvent = {};
 	//while (sdlEvent.type != SDL_QUIT) {
 	//	SDL_PollEvent(&sdlEvent);

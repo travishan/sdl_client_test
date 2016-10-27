@@ -26,19 +26,19 @@ int SDL_main(int argc, char* argv[]) {
 	client.initNetwork("115.159.220.253", 9088); 
 	//client.initNetwork("127.0.0.1", 9088);
 
-
+	char data[MAX_PACKET] = "abcdefghijklmn";
+	client.sendData((uint8_t*)data, strlen(data) + 1);
 	
-	SDL_Event sdlEvent = {};
-	while (sdlEvent.type != SDL_QUIT) {
-		SDL_PollEvent(&sdlEvent);
+	//SDL_Event sdlEvent = {};
+	//while (sdlEvent.type != SDL_QUIT) {
+	//	SDL_PollEvent(&sdlEvent);
 
-		win.clear();
+	//	win.clear();
 
-		//string message("Hello Server I'm Han!");
-		char data[MAX_PACKET] = "11111111111Hello Server I'm Han!";
-		client.sendData((uint8_t*)data, strlen(data) + 1);
-		win.present();
-	}
+	//	//string message("Hello Server I'm Han!");
+	//	
+	//	win.present();
+	//}
 
 	
 	client.closeSocket();

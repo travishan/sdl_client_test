@@ -29,12 +29,21 @@ int SDL_main(int argc, char* argv[]) {
 	//char data[MAX_PACKET] = "abcdefghijklmn";
 	B_POINT p{ 5,10 };
 	uint16_t flag;
-	while (true) {
+	//while (true) {
 		flag = FLAG_PLAY;
 		client.sendData((uint8_t*)&p, sizeof(p), flag);
 		flag = FLAG_CONN;
 		client.sendData((uint8_t*)&p, sizeof(p), flag);
-	}
+	//}
+
+		uint16_t recvFlag;
+		uint16_t recvLength;
+		uint8_t *data = client.recvData(recvFlag, recvLength);
+
+		int time = *(int*)data;
+		delete data;
+		cout << "time:" << time << endl;
+
 	
 	//SDL_Event sdlEvent = {};
 	//while (sdlEvent.type != SDL_QUIT) {

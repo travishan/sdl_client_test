@@ -37,6 +37,31 @@ void ClientSocket::sendData(uint8_t* data, uint16_t length, uint16_t flag) {
 	}
 }
 
+
+uint8_t* ClientSocket::recvData(uint16_t &flag,uint16_t &length) {
+	int numRecv = SDLNet_TCP_Recv(socket, &flag, sizeof(uint16_t));
+	if (numRecv <= 0) {//若numRecv小于0  则发生异常 关闭socket
+		errorClose();
+		return nullptr;
+	} else {//否则，接收剩余消息的长度信息
+		numRecv = SDLNet_TCP_Recv(socket, &length, sizeof(uint16_t));
+		if (numRecv <= 0) {//若numRecv小于0  则发生异常 关闭socket
+			errorClose();
+			return nullptr;
+		} else if (length > 0) {//若length大于0 ，则接收剩余信息
+			uint8_t *tempData = new uint8_t[length];
+			numRecv = SDLNet_TCP_Recv(socket, tempData, length);
+			if (numRecv <= 0) {//若numRecv小于0  则发生异常 关闭socket
+				errorClose();
+				return nullptr;
+			} else {
+				return tempData;
+			}
+		}
+	}
+}
+
+
 void ClientSocket::initNetwork(const char* pIP, int iPort) {
 	IPaddress ip;
 	if (SDLNet_ResolveHost(&ip, pIP, iPort) == -1) {
@@ -79,27 +104,16 @@ bool ClientSocket::checkSocket() {
 }
 
 
-uint8_t* ClientSocket::recvData(uint16_t &length) {
-	uint8_t temp_data[MAX_PACKET];
-	int num_recv = SDLNet_TCP_Recv(socket, temp_data, MAX_PACKET);
 
-	if (num_recv <= 0) {
-		closeSocket();
+void ClientSocket::errorClose() {
+	closeSocket();
 
-		const char* err = SDLNet_GetError();
-		if (strlen(err) == 0) {
-			printf("DB: server shutdown\n");
-		} else {
-			fprintf(stderr, "ER: SDLNet_TCP_Recv: %s\n", err);
-		}
-
-		return nullptr;
+	const char* err = SDLNet_GetError();
+	if (strlen(err) == 0) {
+		printf("DB: server shutdown\n");
 	} else {
-		length = num_recv;
-
-		uint8_t* data = (uint8_t*)malloc(num_recv * sizeof(uint8_t));
-		memcpy(data, temp_data, num_recv);
-
-		return data;
+		fprintf(stderr, "ER: SDLNet_TCP_Recv: %s\n", err);
 	}
 }
+
+

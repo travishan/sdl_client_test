@@ -57,6 +57,8 @@ uint8_t* ClientSocket::recvData(uint16_t &flag,uint16_t &length) {
 			} else {
 				return tempData;
 			}
+		} else {
+			return nullptr;
 		}
 	}
 }

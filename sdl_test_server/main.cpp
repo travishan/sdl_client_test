@@ -38,10 +38,13 @@ int SDL_main(int argc, char* argv[]) {
 		uint16_t recvLength;
 		uint8_t *data = client.recvData(recvFlag, recvLength);
 
+		cout << recvFlag << endl;
+
 		if (data != nullptr) {
-			int time = *(int*)data;
+			char *str = new char[recvLength];
+			memcpy(str, data, recvLength);
 			delete data;
-			cout << "time:" << time << endl;
+			cout << "time:" << str << endl;
 		}
 		
 	}

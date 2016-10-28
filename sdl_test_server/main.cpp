@@ -28,7 +28,6 @@ int SDL_main(int argc, char* argv[]) {
 
 	//char data[MAX_PACKET] = "abcdefghijklmn";
 	B_POINT p{ 5,10 };
-	uint16_t flag;
 	while (true) {
 		/*flag = FLAG_PLAY;
 		client.sendData((uint8_t*)&p, sizeof(p), flag);

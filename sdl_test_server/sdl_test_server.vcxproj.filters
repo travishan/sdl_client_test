@@ -24,12 +24,21 @@
     <ClCompile Include="ClienSocket.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Connector.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyWindow.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ClientSocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Connector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
